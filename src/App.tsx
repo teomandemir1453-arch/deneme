@@ -4,6 +4,7 @@ import RoomCanvas from "./components/RoomCanvas";
 import Shop from "./components/Shop";
 import { fmtMC } from "./game/economy";
 import { useGame } from "./game/useGame";
+import NeonRunner from "./game3d/NeonRunner";
 
 function SoundIcon({ on, music }: { on: boolean; music?: boolean }) {
   return (
@@ -45,6 +46,7 @@ function CoinSVG() {
 export default function App() {
   const g = useGame();
   const [armReset, setArmReset] = useState(false);
+  const [mode, setMode] = useState<"oda" | "runner">("oda");
 
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-[#07090c] text-slate-200">
@@ -76,7 +78,30 @@ export default function App() {
             <i /><i /><i /><i /><i />
           </div>
 
-          <div className="ml-auto flex items-center gap-2">
+          <nav className="ml-auto flex border-2 border-[#2b3a55]">
+            <button
+              onClick={() => setMode("oda")}
+              className={`font-arcade px-3 py-2 text-[7px] transition-colors ${
+                mode === "oda"
+                  ? "bg-emerald-400 text-black shadow-[0_0_14px_rgba(61,255,124,0.5)]"
+                  : "bg-[#101828] text-slate-400 hover:text-emerald-300"
+              }`}
+            >
+              ODA
+            </button>
+            <button
+              onClick={() => setMode("runner")}
+              className={`font-arcade border-l-2 border-[#2b3a55] px-3 py-2 text-[7px] transition-colors ${
+                mode === "runner"
+                  ? "bg-fuchsia-400 text-black shadow-[0_0_14px_rgba(255,45,120,0.5)]"
+                  : "bg-[#101828] text-slate-400 hover:text-fuchsia-300"
+              }`}
+            >
+              3D KOŞU
+            </button>
+          </nav>
+
+          <div className="flex items-center gap-2">
             <button
               onClick={g.toggleMusic}
               title="Müzik aç/kapat"
@@ -103,6 +128,12 @@ export default function App() {
           </div>
         </header>
 
+        {mode === "runner" ? (
+          <main className="flex flex-1 flex-col">
+            <NeonRunner />
+          </main>
+        ) : (
+          <>
         {/* istatistikler */}
         <HUD
           balance={g.s.balance}
@@ -164,32 +195,43 @@ export default function App() {
             />
           </div>
         </main>
+          </>
+        )}
 
         {/* alt şerit */}
         <footer className="rise panel flex flex-wrap items-center gap-x-4 gap-y-2 px-4 py-3" style={{ animationDelay: "0.24s" }}>
-          <p className="font-crt text-[17px] leading-snug text-slate-400">
-            <span className="text-emerald-300">NASIL OYNANIR:</span> odadaki ekrana tıkla → µC biriktir →
-            PC seviyeni ve parçaları yükselt → bilgisayarın senin için <span className="text-amber-300">pasif µC</span> kazsın.
-            Her yatırım <span className="text-fuchsia-300">≈200 günde</span> geri döner, sonrası ömür boyu kâr.
-          </p>
-          <button
-            onClick={() => {
-              if (armReset) {
-                g.reset();
-                setArmReset(false);
-              } else {
-                setArmReset(true);
-                window.setTimeout(() => setArmReset(false), 2500);
-              }
-            }}
-            className={`font-arcade ml-auto border-2 px-3 py-2 text-[7px] transition-colors ${
-              armReset
-                ? "border-red-400 bg-red-400/20 text-red-300"
-                : "border-[#2b3a55] text-slate-500 hover:border-red-400/60 hover:text-red-300"
-            }`}
-          >
-            {armReset ? "EMİN MİSİN? TEKRAR BAS" : "SIFIRLA"}
-          </button>
+          {mode === "oda" ? (
+            <p className="font-crt text-[17px] leading-snug text-slate-400">
+              <span className="text-emerald-300">NASIL OYNANIR:</span> odadaki ekrana tıkla → µC biriktir →
+              PC seviyeni ve parçaları yükselt → bilgisayarın senin için <span className="text-amber-300">pasif µC</span> kazsın.
+              Her yatırım <span className="text-fuchsia-300">≈200 günde</span> geri döner, sonrası ömür boyu kâr.
+            </p>
+          ) : (
+            <p className="font-crt text-[17px] leading-snug text-slate-400">
+              <span className="text-fuchsia-300">NEON KOŞUCU:</span> A/D ile şerit değiştir, <span className="text-cyan-300">BOŞLUK</span> ile
+              alçak engellerin üstünden zıpla, <span className="text-amber-300">coinleri</span> topla. Hız sürekli artar — 3 canın var!
+            </p>
+          )}
+          {mode === "oda" && (
+            <button
+              onClick={() => {
+                if (armReset) {
+                  g.reset();
+                  setArmReset(false);
+                } else {
+                  setArmReset(true);
+                  window.setTimeout(() => setArmReset(false), 2500);
+                }
+              }}
+              className={`font-arcade ml-auto border-2 px-3 py-2 text-[7px] transition-colors ${
+                armReset
+                  ? "border-red-400 bg-red-400/20 text-red-300"
+                  : "border-[#2b3a55] text-slate-500 hover:border-red-400/60 hover:text-red-300"
+              }`}
+            >
+              {armReset ? "EMİN MİSİN? TEKRAR BAS" : "SIFIRLA"}
+            </button>
+          )}
         </footer>
       </div>
 
