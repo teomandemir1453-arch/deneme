@@ -4,6 +4,7 @@
 export type SfxName =
   | "eat"
   | "bonus"
+  | "deny"
   | "crash"
   | "gameover"
   | "start"
@@ -221,6 +222,10 @@ class ChipEngine {
       case "coin":
         T(987.77, 987.77, 0.08, 0.22, 0);
         T(1318.5, 1318.5, 0.3, 0.22, 0.08);
+        break;
+      case "deny":
+        T(160, 90, 0.16, 0.2, 0, 1200);
+        T(120, 70, 0.18, 0.2, 0.09, 1000);
         break;
       case "eat":
         T(540, 1080, 0.08, 0.18, 0, 3000);

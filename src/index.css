@@ -148,6 +148,105 @@ body {
 .vu i:nth-child(5) { height: 50%; animation-delay: 0.18s; }
 .vu-paused i { animation-play-state: paused; transform: scaleY(0.12); }
 
+/* ------- terminal panel ------- */
+.panel {
+  border: 2px solid #2b3a55;
+  background: #0d1322;
+  box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.55);
+  position: relative;
+}
+.panel-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-bottom: 2px solid #2b3a55;
+  background: linear-gradient(#182238, #101828);
+  font-family: "Press Start 2P", monospace;
+  position: relative;
+}
+.panel-bar::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  background: #ff2d78;
+  box-shadow: 12px 0 0 #ffb300, 24px 0 0 #3dff7c;
+  margin-right: 30px;
+}
+
+/* ------- sayaç çubuğu ------- */
+.meter {
+  height: 14px;
+  border: 2px solid #2b3a55;
+  background: #0a0f1c;
+  box-shadow: inset 2px 2px 0 rgba(0, 0, 0, 0.6);
+}
+.meter-fill {
+  height: 100%;
+  background: repeating-linear-gradient(90deg, #3dff7c 0 6px, #2bc862 6px 12px);
+  transition: width 0.35s ease;
+  box-shadow: 0 0 10px rgba(61, 255, 124, 0.5);
+}
+
+/* ------- satın alma butonu ------- */
+.btn-buy {
+  width: 100%;
+  font-family: "Press Start 2P", monospace;
+  font-size: 9px;
+  letter-spacing: 0.5px;
+  color: #04150b;
+  background: linear-gradient(#54ff92, #2bc862);
+  border: 2px solid #0a3d20;
+  box-shadow: 0 4px 0 #0a3d20, 0 0 16px rgba(61, 255, 124, 0.35);
+  padding: 11px 8px;
+  cursor: pointer;
+  transition: transform 0.08s, box-shadow 0.08s;
+}
+.btn-buy:hover { filter: brightness(1.08); }
+.btn-buy:active { transform: translateY(3px); box-shadow: 0 1px 0 #0a3d20; }
+.btn-buy-off {
+  background: linear-gradient(#3a4356, #262e3f);
+  color: #8b98b3;
+  border-color: #11151f;
+  box-shadow: 0 4px 0 #11151f;
+  cursor: not-allowed;
+}
+.btn-buy-off:active { transform: none; }
+
+/* ------- sarsıntı ------- */
+@keyframes ry-shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-5px); }
+  40% { transform: translateX(5px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+}
+.shake { animation: ry-shake 0.4s ease; }
+
+/* ------- toast ------- */
+@keyframes ry-toast {
+  from { transform: translateX(110%); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+.toast {
+  animation: ry-toast 0.3s cubic-bezier(0.2, 0.9, 0.3, 1.2) both;
+  border: 2px solid;
+  font-family: "VT323", monospace;
+  font-size: 19px;
+  padding: 6px 12px;
+  background: #0d1322;
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.5);
+}
+
+/* ------- kaydırma çubuğu ------- */
+.scroll-thin::-webkit-scrollbar { width: 8px; }
+.scroll-thin::-webkit-scrollbar-track { background: #0a0f1c; }
+.scroll-thin::-webkit-scrollbar-thumb {
+  background: #2b3a55;
+  border: 2px solid #0a0f1c;
+}
+.scroll-thin::-webkit-scrollbar-thumb:hover { background: #3dff7c; }
+
 /* ------- klavye tuşu ------- */
 .keycap {
   font-family: "Press Start 2P", monospace;
